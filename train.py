@@ -5,6 +5,7 @@ from slime.utils.arguments import parse_args
 from slime.utils.logging_utils import configure_logger, init_tracking
 from slime.utils.misc import should_run_periodic_action
 from tqdm import tqdm
+print("start local training file")
 
 def train(args):
     configure_logger()
