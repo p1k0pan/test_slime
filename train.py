@@ -4,7 +4,7 @@ from slime.ray.placement_group import create_placement_groups, create_rollout_ma
 from slime.utils.arguments import parse_args
 from slime.utils.logging_utils import configure_logger, init_tracking
 from slime.utils.misc import should_run_periodic_action
-
+from tqdm import tqdm
 
 def train(args):
     configure_logger()
@@ -62,7 +62,7 @@ def train(args):
 
     # train loop.
     # note that for async training, one can change the position of the sync operation(ray.get).
-    for rollout_id in range(args.start_rollout_id, args.num_rollout):
+    for rollout_id in tqdm(range(args.start_rollout_id, args.num_rollout)):
         if args.eval_interval is not None and rollout_id == 0 and not args.skip_eval_before_train:
             ray.get(rollout_manager.eval.remote(rollout_id))
 
@@ -92,6 +92,7 @@ def train(args):
         if should_run_periodic_action(rollout_id, args.eval_interval, num_rollout_per_epoch):
             ray.get(rollout_manager.eval.remote(rollout_id))
 
+    ray.get(rollout_manager.eval.remote(rollout_id))
     ray.get(rollout_manager.dispose.remote())
 
 
