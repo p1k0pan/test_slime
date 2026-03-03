@@ -16,17 +16,17 @@ DATASET_NAME=${SLIME_SCRIPT_DATASET_NAME:-"chenhegu/geo3k_imgurl"}
 NUM_GPUS=${SLIME_SCRIPT_NUM_GPUS:-8}
 DATASET_LOCAL_NAME=$(basename "$DATASET_NAME")
 DATASET_ROOT=${SLIME_SCRIPT_DATASET_ROOT:-"/data/oss_bucket_0/users/xintong/pjh/datasets"}
-OUTPUT_DIR=${SLIME_SCRIPT_OUTPUT_DIR:-"/data/oss_bucket_0/users/xintong/team/pjh/All_results/test_slime"}
+OUTPUT_DIR=${SLIME_SCRIPT_OUTPUT_DIR:-"/data/oss_bucket_0/users/xintong/team/jingheng/All_results/test_slime"}
 OUT_NAME=${SLIME_SCRIPT_OUTPUT_NAME:-"geo3k_test_"${MODEL_NAME}}
 
 mkdir -p "${OUTPUT_DIR}"
 
 # Validate required paths
 for _path in \
-   "/data/oss_bucket_0/users/xintong/team/pjh/test_slime" \
    "/data/oss_bucket_0/users/xintong/pjh/Megatron-LM" \
    "${MODEL_ROOT}" \
-   "${DATASET_ROOT}"
+   "${DATASET_ROOT}" \
+   "/data/oss_bucket_0/users/xintong/team/jingheng/test_slime" 
 do
    if [ ! -d "$_path" ]; then
       echo "Error: 文件地址不存在: $_path"
@@ -222,7 +222,7 @@ BACKEND_ARGS=(
    
 # get MODEL_ARGS from scripts/models for megatron backend
 # SLIME_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." &>/dev/null && pwd)"
-SLIME_DIR="/data/oss_bucket_0/users/xintong/team/pjh/test_slime"
+SLIME_DIR="/data/oss_bucket_0/users/xintong/team/jingheng/test_slime"
 # MODEL_ARGS_FILE=$(echo "$MODEL_NAME" | sed 's/-Instruct//g; s/-Thinking//g; s/Qwen3-VL-/qwen3-/g; s/-2B/-1.7B/g')
 MODEL_ARGS_FILE=$(echo "$MODEL_NAME" | sed 's/-Instruct//g; s/-Thinking//g; s/-FP8//g; s/Qwen3-VL-/qwen3-/g; s/-2B/-1.7B/g')
 # VL models require rotary-base 5000000
